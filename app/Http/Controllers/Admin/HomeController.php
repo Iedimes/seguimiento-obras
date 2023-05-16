@@ -106,6 +106,9 @@ class HomeController extends Controller
         //return 'hola';
         $dt = new \DateTime('2021-05-21');
         $date = $dt->format('Y-d-m H:i:s.v');
+        // return $x=Project::all();
+        // return $contar=count($x);
+        // return $x=Project::find(3944);
         $data = AdminListing::create(Project::class)
             ->attachPagination($request->currentPage)
 
@@ -119,13 +122,24 @@ class HomeController extends Controller
 
                 if ($request->search) {
 
+                    // $query->where(function ($query) use ($request) {
+                    //     $query->where('SEOBProy', 'like', '%' . $request->search . '%')
+                    //           ->orWhereHas('departamento', function ($query) use ($request) {
+                    //                 $query->where('DptoNom', 'like', '%' . $request->search . '%');
+                    //             })
+                    //           ->orWhere('SEOBNCont', 'like', '%' . $request->search . '%')
+                    //           ->orWhere('SEOBEmpr', 'like', '%' . $request->search . '%');
+                    // })->where(function ($query) {
+                    //     $query->where('SEOBVerObra', 'S');
+                    // });
                     $query->where(function ($query) use ($request) {
-                        $query->where('SEOBProy', 'like', '%' . $request->search . '%')
-                              ->orWhereHas('departamento', function ($query) use ($request) {
-                                    $query->where('DptoNom', 'like', '%' . $request->search . '%');
+                        $search = addslashes($request->search);
+                        $query->where('SEOBProy', 'like', '%' . $search . '%')
+                              ->orWhereHas('departamento', function ($query) use ($search) {
+                                    $query->where('DptoNom', 'like', '%' . $search . '%');
                                 })
-                              ->orWhere('SEOBNCont', 'like', '%' . $request->search . '%')
-                              ->orWhere('SEOBEmpr', 'like', '%' . $request->search . '%');
+                              ->orWhere('SEOBNCont', 'like', '%' . $search . '%')
+                              ->orWhere('SEOBEmpr', 'like', '%' . $search . '%');
                     })->where(function ($query) {
                         $query->where('SEOBVerObra', 'S');
                     });
