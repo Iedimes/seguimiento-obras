@@ -9,7 +9,7 @@
 <div class="form-group row align-items-center" :class="{'has-danger': errors.has('visit_number'), 'has-success': fields.visit_number && fields.visit_number.valid }">
     <label for="visit_number" class="col-form-label text-md-right" :class="isFormLocalized ? 'col-md-4' : 'col-md-2'">{{ trans('admin.visit.columns.visit_number') }}</label>
         <div :class="isFormLocalized ? 'col-md-4' : 'col-md-9 col-xl-8'">
-        <input type="text" v-model="form.visit_number" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('visit_number'), 'form-control-success': fields.visit_number && fields.visit_number.valid}" id="visit_number" name="visit_number" placeholder="{{ trans('admin.visit.columns.visit_number') }}">
+        <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')" v-model="form.visit_number" v-validate="'required'" @input="validate($event)" class="form-control" :class="{'form-control-danger': errors.has('visit_number'), 'form-control-success': fields.visit_number && fields.visit_number.valid}" id="visit_number" name="visit_number" placeholder="{{ trans('admin.visit.columns.visit_number') }}">
         <div v-if="errors.has('visit_number')" class="form-control-feedback form-text" v-cloak>@{{ errors.first('visit_number') }}</div>
     </div>
 </div>
