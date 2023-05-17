@@ -133,7 +133,7 @@ class HomeController extends Controller
                     //     $query->where('SEOBVerObra', 'S');
                     // });
                     $query->where(function ($query) use ($request) {
-                        $search = addslashes($request->search);
+                        $search = trim($request->search);
                         $query->where('SEOBProy', 'like', '%' . $search . '%')
                               ->orWhereHas('departamento', function ($query) use ($search) {
                                     $query->where('DptoNom', 'like', '%' . $search . '%');
